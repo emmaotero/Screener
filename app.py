@@ -258,11 +258,11 @@ def score_to_color(score):
     else:            return '#ff1744'
 
 def score_to_bg(score):
-    if score >= 8:   return '#00e67622'
-    elif score >= 6: return '#69f0ae22'
-    elif score >= 4: return '#ffd74022'
-    elif score >= 2: return '#ff6d0022'
-    else:            return '#ff174422'
+    if score >= 8:   return 'rgba(0,230,118,0.13)'
+    elif score >= 6: return 'rgba(105,240,174,0.13)'
+    elif score >= 4: return 'rgba(255,215,64,0.13)'
+    elif score >= 2: return 'rgba(255,109,0,0.13)'
+    else:            return 'rgba(255,23,68,0.13)'
 
 
 # ─────────────────────────────────────────────
@@ -646,25 +646,25 @@ def plot_precio(hist, ticker):
         low=hist['Low'].squeeze(), close=close, name='Precio',
         increasing_line_color='#00e676', decreasing_line_color='#ff1744'), row=1, col=1)
     fig.add_trace(go.Scatter(x=hist.index, y=bb.bollinger_hband(), name='BB+',
-        line=dict(color='#7b61ff44', dash='dot'), showlegend=False), row=1, col=1)
+        line=dict(color='rgba(123,97,255,0.27)', dash='dot'), showlegend=False), row=1, col=1)
     fig.add_trace(go.Scatter(x=hist.index, y=bb.bollinger_lband(), name='BB-',
-        line=dict(color='#7b61ff44', dash='dot'),
-        fill='tonexty', fillcolor='#7b61ff08', showlegend=False), row=1, col=1)
+        line=dict(color='rgba(123,97,255,0.27)', dash='dot'),
+        fill='tonexty', fillcolor='rgba(123,97,255,0.03)', showlegend=False), row=1, col=1)
     fig.add_trace(go.Scatter(x=hist.index, y=sma20,  name='SMA 20',  line=dict(color='#ffd740', width=1.2)), row=1, col=1)
     fig.add_trace(go.Scatter(x=hist.index, y=sma50,  name='SMA 50',  line=dict(color='#00d4ff', width=1.2)), row=1, col=1)
     fig.add_trace(go.Scatter(x=hist.index, y=sma200, name='SMA 200', line=dict(color='#ff6d90', width=1.2)), row=1, col=1)
 
-    colores_vol = ['#ff174488' if row['Close'].squeeze() < row['Open'].squeeze() else '#00e67688'
+    colores_vol = ['rgba(255,23,68,0.53)' if row['Close'].squeeze() < row['Open'].squeeze() else 'rgba(0,230,118,0.53)'
                    for _, row in hist.iterrows()]
     fig.add_trace(go.Bar(x=hist.index, y=hist['Volume'].squeeze(), name='Vol',
         marker_color=colores_vol, showlegend=False), row=2, col=1)
 
     fig.add_trace(go.Scatter(x=hist.index, y=rsi, name='RSI',
         line=dict(color='#b388ff', width=1.5), showlegend=False), row=3, col=1)
-    fig.add_hline(y=70, line_dash='dot', line_color='#ff174466', row=3, col=1)
-    fig.add_hline(y=30, line_dash='dot', line_color='#00e67666', row=3, col=1)
+    fig.add_hline(y=70, line_dash='dot', line_color='rgba(255,23,68,0.4)', row=3, col=1)
+    fig.add_hline(y=30, line_dash='dot', line_color='rgba(0,230,118,0.4)', row=3, col=1)
 
-    colores_macd = ['#ff174488' if v < 0 else '#00e67688' for v in macd_hist]
+    colores_macd = ['rgba(255,23,68,0.53)' if v < 0 else 'rgba(0,230,118,0.53)' for v in macd_hist]
     fig.add_trace(go.Bar(x=hist.index, y=macd_hist, name='Hist',
         marker_color=colores_macd, showlegend=False), row=4, col=1)
     fig.add_trace(go.Scatter(x=hist.index, y=macd_line, name='MACD',
@@ -693,12 +693,12 @@ def plot_gauge(score_final, scores_cat):
             'bar': {'color': score_to_color(score_final), 'thickness': 0.25},
             'bgcolor': '#12121e',
             'bordercolor': '#1e1e38',
-           'steps': [
-                {'range': [1, 2],  'color': 'rgba(255,23,68,0.1)'},
-                {'range': [2, 4],  'color': 'rgba(255,109,0,0.1)'},
-                {'range': [4, 6],  'color': 'rgba(255,215,64,0.1)'},
-                {'range': [6, 8],  'color': 'rgba(105,240,174,0.1)'},
-                {'range': [8, 10], 'color': 'rgba(0,230,118,0.1)'},
+            'steps': [
+                {'range': [1, 2],  'color': 'rgba(255,23,68,0.13)'},
+                {'range': [2, 4],  'color': 'rgba(255,109,0,0.13)'},
+                {'range': [4, 6],  'color': 'rgba(255,215,64,0.13)'},
+                {'range': [6, 8],  'color': 'rgba(105,240,174,0.13)'},
+                {'range': [8, 10], 'color': 'rgba(0,230,118,0.13)'},
             ]
         }
     ), row=1, col=1)
@@ -743,7 +743,7 @@ def plot_scores_detalle(scores_tec, scores_fun, scores_cuan, scores_sent):
 def plot_peers(df_peers, ticker):
     header_vals = [''] + list(df_peers.columns)
     cell_vals   = [df_peers.index.tolist()] + [df_peers[c].tolist() for c in df_peers.columns]
-    row_colors  = [['#00d4ff22' if t == ticker else '#12121e' for t in df_peers.index]]
+    row_colors  = [['rgba(0,212,255,0.13)' if t == ticker else '#12121e' for t in df_peers.index]]
     fill_colors = row_colors * len(header_vals)
 
     fig = go.Figure(go.Table(
