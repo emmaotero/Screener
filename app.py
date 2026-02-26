@@ -693,12 +693,12 @@ def plot_gauge(score_final, scores_cat):
             'bar': {'color': score_to_color(score_final), 'thickness': 0.25},
             'bgcolor': '#12121e',
             'bordercolor': '#1e1e38',
-            'steps': [
-                {'range': [1, 2],  'color': '#ff174422'},
-                {'range': [2, 4],  'color': '#ff6d0022'},
-                {'range': [4, 6],  'color': '#ffd74022'},
-                {'range': [6, 8],  'color': '#69f0ae22'},
-                {'range': [8, 10], 'color': '#00e67622'},
+           'steps': [
+                {'range': [1, 2],  'color': 'rgba(255,23,68,0.1)'},
+                {'range': [2, 4],  'color': 'rgba(255,109,0,0.1)'},
+                {'range': [4, 6],  'color': 'rgba(255,215,64,0.1)'},
+                {'range': [6, 8],  'color': 'rgba(105,240,174,0.1)'},
+                {'range': [8, 10], 'color': 'rgba(0,230,118,0.1)'},
             ]
         }
     ), row=1, col=1)
